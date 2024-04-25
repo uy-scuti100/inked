@@ -37,8 +37,8 @@ export default function Navbar() {
 		<>
 			<div
 				className={` ${
-					visible ? "fixed" : "absolute"
-				}  flex sm:static top-3  justify-between w-full z-[999999] sm:pt-3 items-center flex-col px-2 py-3 border border-greyish rounded-full bg-greyish sm:mt-3 `}
+					visible ? "fixed nav-visible" : "absolute nav-hidden"
+				}  flex sm:static top-3  justify-between left-0 right-0 w-[98%] z-[999999] sm:pt-3 items-center flex-col px-2 py-3 border border-greyish rounded-full bg-greyish sm:mt-3 mx-auto navbar`}
 			>
 				<div className="justify-between items-center flex w-full">
 					<Link href={"/"}>
@@ -78,7 +78,7 @@ export default function Navbar() {
 				<nav
 					style={{ height: "calc(100vh - 70px)" }}
 					className={`absolute transition-all rounded-2xl top-[78px] duration-300 ease-linear h-full z-50 sm:hidden w-full bg-greyish text-black} ${
-						open ? " left-0 " : "left-[-100%]"
+						open ? " left-0 " : "left-[-150%]"
 					}`}
 				>
 					<div className="flex flex-col items-center gap-10 pt-20">

@@ -8,14 +8,25 @@
 	--orange: "#F25b05";
 }
 
+body::-webkit-scrollbar {
+	display: none;
+}
+
 * {
 	font-family: "Montserrat", serif;
 	font-size: 1rem;
 	scroll-behavior: smooth;
-
 	transition: 0.3s ease;
 }
 
+@font-face {
+	font-family: "Mountain";
+	src: url("../fonts/mountain/MountainsofChristmas-Regular.ttf")
+		format(truetype);
+	font-style: normal;
+	font-weight: 400;
+	text-rendering: optimizeLegibility;
+}
 @font-face {
 	font-family: "Humane Bold";
 	src: url("../fonts/humane/Humane-Light.ttf") format(truetype);
@@ -38,6 +49,19 @@
 	font-family: "Montserrat Light";
 	src: url("../fonts/mont//Montserrat-Light.ttf") format(truetype);
 }
+
+.nav-visible {
+	opacity: 1;
+	transition: all 1s ease;
+	height: auto;
+}
+
+.nav-hidden {
+	opacity: 0;
+	transition: all 1s ease;
+	height: 0;
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;
@@ -145,7 +169,9 @@
 	.humane-semibold {
 		font-family: "Humane Semibold", serif;
 	}
-
+	.happy-monkey {
+		font-family: "Mountain", serif;
+	}
 	.mon-light {
 		font-family: "Montserrat Light", serif;
 	}
