@@ -10,8 +10,8 @@ function SmoothScroll({ children }: { children: React.ReactNode }) {
 			options={{
 				duration: 0.005,
 				smoothWheel: true,
-
-				easing: (t: number): number => (Math.cos(Math.PI * t) - 1) / 2,
+				syncTouch: true,
+				easing: (t: number): number => Math.sin((t * Math.PI) / 2),
 			}}
 		>
 			{children}

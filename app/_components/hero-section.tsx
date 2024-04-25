@@ -6,7 +6,7 @@ import { ICONS } from "@/constants";
 export default function Herosection() {
 	return (
 		<section className="px-4">
-			<h1 className="pt-[70px] sm:pt-0 text-center lg:text-[9.8rem] md:text-[8rem] sm:text-[7.5rem] text-[7rem] border-b border-greyish mb-7 mt-3 leading-[100%]">
+			<h1 className="pt-[90px] sm:pt-0 text-center lg:text-[9.8rem] md:text-[8rem] sm:text-[7.5rem] text-[7rem] border-b border-greyish mb-7 mt-3 leading-[100%]">
 				WE CREATE ART ON <br className="sm:hidden" /> PEOPLE&apos;S BODIES
 			</h1>
 			<div>
