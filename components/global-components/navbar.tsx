@@ -38,7 +38,7 @@ export default function Navbar() {
 			<div
 				className={` ${
 					visible ? "fixed" : "absolute"
-				}  flex sm:static top-3  justify-between w-full z-[999999] sm:pt-3 items-center flex-col px-2 lg:px-0 py-3 border border-greyish rounded-full bg-greyish sm:mt-3 `}
+				}  flex sm:static top-3  justify-between w-full z-[999999] sm:pt-3 items-center flex-col px-2 py-3 border border-greyish rounded-full bg-greyish sm:mt-3 `}
 			>
 				<div className="justify-between items-center flex w-full">
 					<Link href={"/"}>
