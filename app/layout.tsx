@@ -6,7 +6,7 @@ import SmoothScroll from "@/provider/smooth-scroll";
 import Footer from "@/components/global-components/footer";
 
 export const metadata: Metadata = {
-	title: "Sp",
+	title: "Inked",
 	description: "Number one best tattoo shop",
 };
 

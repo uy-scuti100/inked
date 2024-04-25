@@ -7,6 +7,7 @@
 	--grey: "#EEEEEE";
 	--orange: "#F25b05";
 }
+
 * {
 	font-family: "Montserrat", serif;
 	font-size: 1rem;
@@ -114,6 +115,26 @@
 	}
 	h2 {
 		@apply humane-bold;
+	}
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+
+	.lenis.lenis-smooth {
+		scroll-behavior: auto !important;
+	}
+
+	.lenis.lenis-smooth [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+
+	.lenis.lenis-scrolling iframe {
+		pointer-events: none;
 	}
 }
 

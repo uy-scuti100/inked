@@ -7,12 +7,11 @@ function SmoothScroll({ children }: { children: React.ReactNode }) {
 		<ReactLenis
 			root
 			options={{
-				duration: 0.0001,
-				// lerp: 0.1,
+				duration: 0.005,
+				syncTouchLerp: 0.075,
 				smoothWheel: true,
 				syncTouch: true,
-				// easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-				easing: (t) => t,
+				easing: (t: number): number => (Math.cos(Math.PI * t) - 1) / 2,
 			}}
 		>
 			{children}
