@@ -1,33 +1,204 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--white: "#FFFFFF";
+	--black: "#1C1C1C";
+	--grey: "#EEEEEE";
+	--orange: "#F25b05";
+}
+* {
+	font-family: "Montserrat", serif;
+	font-size: 1rem;
+	scroll-behavior: smooth;
+
+	transition: 0.3s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+	font-family: "Humane Bold";
+	src: url("../fonts/humane/Humane-Light.ttf") format(truetype);
+	font-style: normal;
+	font-weight: bold;
+	text-rendering: optimizeLegibility;
+}
+@font-face {
+	font-family: "Humane Semibold";
+	src: url("../fonts/humane/Humane-SemiBold.ttf") format(truetype);
+	font-style: normal;
+	font-weight: normal;
+	text-rendering: optimizeLegibility;
+}
+@font-face {
+	font-family: "Montserrat";
+	src: url("../fonts/mont//Montserrat-Regular.ttf") format(truetype);
+}
+@font-face {
+	font-family: "Montserrat Light";
+	src: url("../fonts/mont//Montserrat-Light.ttf") format(truetype);
+}
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 0 0% 3.9%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 0 0% 3.9%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 0 0% 3.9%;
+
+		--primary: 0 0% 9%;
+		--primary-foreground: 0 0% 98%;
+
+		--secondary: 0 0% 96.1%;
+		--secondary-foreground: 0 0% 9%;
+
+		--muted: 0 0% 96.1%;
+		--muted-foreground: 0 0% 45.1%;
+
+		--accent: 0 0% 96.1%;
+		--accent-foreground: 0 0% 9%;
+
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 0 0% 98%;
+
+		--border: 0 0% 89.8%;
+		--input: 0 0% 89.8%;
+		--ring: 0 0% 3.9%;
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 0 0% 3.9%;
+		--foreground: 0 0% 98%;
+
+		--card: 0 0% 3.9%;
+		--card-foreground: 0 0% 98%;
+
+		--popover: 0 0% 3.9%;
+		--popover-foreground: 0 0% 98%;
+
+		--primary: 0 0% 98%;
+		--primary-foreground: 0 0% 9%;
+
+		--secondary: 0 0% 14.9%;
+		--secondary-foreground: 0 0% 98%;
+
+		--muted: 0 0% 14.9%;
+		--muted-foreground: 0 0% 63.9%;
+
+		--accent: 0 0% 14.9%;
+		--accent-foreground: 0 0% 98%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 0 0% 98%;
+
+		--border: 0 0% 14.9%;
+		--input: 0 0% 14.9%;
+		--ring: 0 0% 83.1%;
+	}
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-black;
+	}
+
+	h1 {
+		@apply humane-semibold;
+	}
+	h2 {
+		@apply humane-bold;
+	}
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@layer components {
+	.humane-bold {
+		font-family: "Humane Bold", serif;
+	}
+	.humane-semibold {
+		font-family: "Humane Semibold", serif;
+	}
+
+	.mon-light {
+		font-family: "Montserrat Light", serif;
+	}
+	.master_name {
+		position: relative;
+	}
+
+	.master_name::after {
+		content: "";
+		position: absolute;
+		width: 30%; /* Adjust the width as needed */
+		height: 1px; /* Adjust the height as needed */
+		background-color: rgb(242, 91, 5);
+		left: 0;
+		bottom: 0;
+	}
+
+	/* For desktop */
+	@media only screen and (min-width: 640px) {
+		.grid-container {
+			display: grid;
+			grid-template-columns: repeat(6, 1fr);
+			grid-template-rows: repeat(3, 150px);
+			gap: 10px;
+		}
+
+		.item:nth-child(1) {
+			grid-column: span 2;
+			grid-row: span 3;
+		}
+
+		.item:nth-child(2) {
+			grid-row: span 1;
+			grid-column: span 4;
+		}
+
+		.item:nth-child(3) {
+			grid-row: span 2;
+			grid-column: span 2;
+		}
+
+		.item:nth-child(4) {
+			grid-row: span 2;
+			grid-column: span 2;
+		}
+	}
+
+	/* For mobile */
+	@media only screen and (max-width: 640px) {
+		.grid-container {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(150px, 1fr));
+			grid-template-rows: repeat(3, 200px);
+			gap: 10px;
+		}
+
+		.item:nth-child(1) {
+			grid-row: span 1;
+			grid-column: span 1;
+		}
+
+		.item:nth-child(2) {
+			grid-row: span 1;
+			grid-column: span 1;
+		}
+
+		.item:nth-child(3) {
+			grid-row: span 1;
+			grid-column: span 2;
+		}
+
+		.item:nth-child(4) {
+			grid-row: span 1;
+			grid-column: span 2;
+		}
+	}
 }
