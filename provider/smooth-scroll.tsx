@@ -8,11 +8,11 @@ function SmoothScroll({ children }: { children: React.ReactNode }) {
 		<ReactLenis
 			root
 			options={{
-				duration: 0.4,
-				// lerp: 1.2,
+				duration: 1.5,
+				lerp: 0.1,
 				smoothWheel: true,
 				syncTouch: true,
-				syncTouchLerp: 1.2,
+
 				// easing: (t: number): number => Math.sin((t * Math.PI) / 2),
 			}}
 		>
