@@ -16,7 +16,6 @@ body::-webkit-scrollbar {
 	font-family: "Montserrat", serif;
 	font-size: 1rem;
 	scroll-behavior: smooth;
-	transition: 0.3s ease;
 }
 
 @font-face {
@@ -58,8 +57,16 @@ body::-webkit-scrollbar {
 
 .nav-hidden {
 	opacity: 0;
+	visibility: hidden;
 	transition: all 1s ease;
 	height: 0;
+}
+
+.word {
+	display: inline-block;
+	line-height: 1em;
+	transform: translateY(-10);
+	opacity: 0;
 }
 
 @layer base {
@@ -139,26 +146,6 @@ body::-webkit-scrollbar {
 	}
 	h2 {
 		@apply humane-bold;
-	}
-	html.lenis,
-	html.lenis body {
-		height: auto;
-	}
-
-	.lenis.lenis-smooth {
-		scroll-behavior: auto !important;
-	}
-
-	.lenis.lenis-smooth [data-lenis-prevent] {
-		overscroll-behavior: contain;
-	}
-
-	.lenis.lenis-stopped {
-		overflow: hidden;
-	}
-
-	.lenis.lenis-scrolling iframe {
-		pointer-events: none;
 	}
 }
 

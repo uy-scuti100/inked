@@ -1,11 +1,33 @@
+"use client";
 import { ICONS, testimonial } from "@/constants";
+import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
+import sr from "@/lib/sr";
+import { srConfig } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 export default function Testimonials() {
+	const prefersReducedMotion = usePrefersReducedMotion();
+	const testimonialTitle = useRef<HTMLDivElement | null>(null);
+	const testimonialProjects = useRef<(HTMLElement | null)[]>([]);
+	useEffect(() => {
+		if (prefersReducedMotion) {
+			return;
+		}
+		if (sr) {
+			sr.reveal(testimonialTitle.current!, srConfig());
+
+			testimonialProjects.current.forEach(
+				(ref, i) => ref && sr?.reveal(ref, srConfig(i * 100))
+			);
+		}
+	}, []);
 	return (
-		<section id="tßestimonials" className="px-4 py-2 mt-20">
-			<h2 className="text-center py-10 text-6xl sm:text-7xl uppercase sm:text-left">
+		<section id="testimonials" className="px-4 py-2 mt-20">
+			<h2
+				className="text-center py-10 text-6xl sm:text-7xl uppercase "
+				ref={testimonialTitle}
+			>
 				Not sure about your decisions? see the reviews of people who trusted us!
 			</h2>
 
@@ -14,7 +36,15 @@ export default function Testimonials() {
 					{testimonial.map((t, i) => {
 						const { name, body, image } = t;
 						return (
-							<figure key={i} className="bg-greyish rounded-2xl px-8 py-6">
+							<figure
+								key={i}
+								ref={(el) => {
+									if (el) {
+										testimonialProjects.current[i] = el;
+									}
+								}}
+								className="bg-greyish rounded-2xl px-8 py-6"
+							>
 								<figcaption className=" gap-10 flex flex-col justify-between">
 									<div className="flex flex-col gap-3">
 										<Image

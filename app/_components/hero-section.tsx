@@ -1,31 +1,158 @@
+"use client";
 import Image from "next/image";
 import heroImage from "../../public/hero-tat.webp";
 import wavy from "../../public/wavy.png";
 import { ICONS } from "@/constants";
+import { useGSAP } from "@gsap/react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 export default function Herosection() {
+	const headerRef = useRef<HTMLHeadingElement | null>(null);
+	const subHeaderRef = useRef<HTMLHeadingElement | null>(null);
+	const wavyRef = useRef<HTMLDivElement | null>(null);
+	const cardRef = useRef<HTMLDivElement | null>(null);
+	const buttonRef = useRef<HTMLDivElement | null>(null);
+	const heroImageRef = useRef<HTMLDivElement | null>(null);
+	const mobileCardRef = useRef<HTMLDivElement | null>(null);
+	const tl = useRef<gsap.core.Timeline | null>(null);
+	const tl2 = useRef<gsap.core.Timeline | null>(null);
+	gsap.registerPlugin(ScrollTrigger);
+
+	useGSAP(() => {
+		tl.current = gsap.timeline();
+		tl2.current = gsap.timeline();
+		const box = mobileCardRef.current;
+
+		tl.current
+			.to(headerRef.current, {
+				x: 0,
+				duration: 1,
+				opacity: 1,
+				ease: "power3.in",
+			})
+			.to(subHeaderRef.current, {
+				y: 0,
+				opacity: 1,
+				ease: "power2.inOut",
+			});
+
+		tl2.current
+			.to(".word", {
+				delay: 1,
+				duration: 1,
+				y: 0,
+				opacity: 1,
+				stagger: {
+					amount: 0.9,
+				},
+				ease: "power4.inOut",
+			})
+			.to(
+				wavyRef.current,
+				{
+					x: 0,
+					duration: 1,
+					opacity: 1,
+					ease: "power3.in",
+				},
+				"-=1"
+			)
+			.to(
+				cardRef.current,
+				{
+					x: 0,
+					duration: 1,
+					opacity: 1,
+					ease: "power3.in",
+				},
+				"-=1"
+			)
+			.to(
+				buttonRef.current,
+				{
+					// delay: 0.3,
+					x: 0,
+					duration: 1,
+					opacity: 1,
+					ease: "power3.in",
+				},
+				"-=1"
+			)
+			.to(
+				heroImageRef.current,
+				{
+					// delay: -0.6,
+					duration: 1,
+					opacity: 1,
+					ease: "power4.in",
+				},
+				"-=1"
+			);
+
+		gsap.to(box, {
+			scrollTrigger: {
+				trigger: box,
+				start: "top 90%",
+				end: "bottom 80%",
+				scrub: true,
+				once: true,
+			},
+			opacity: 1,
+			scale: 1,
+			y: 0,
+			duration: 1,
+		});
+	});
+
 	return (
-		<section className="px-4">
-			<h1 className="pt-[90px] sm:pt-0 text-center lg:text-[9.8rem] md:text-[8rem] sm:text-[7.5rem] text-[7rem] border-b border-greyish mb-7 mt-3 leading-[100%]">
+		<section className="px-4 pt-5">
+			<h1
+				ref={headerRef}
+				className="pt-[90px] sm:pt-0 text-center lg:text-[9.8rem] md:text-[8rem] sm:text-[7.5rem] text-[7rem] border-b border-greyish mb-7 mt-3 leading-[100%] opacity-0 translate-x-[-5%]"
+			>
 				WE CREATE ART ON <br className="sm:hidden" /> PEOPLE&apos;S BODIES
 			</h1>
 			<div>
 				<div className="flex flex-col items-center md:flex-row gap-10 lg:gap-20 px-2">
 					<div className="basis-1/2">
-						<h2 className="text-[3.5rem] sm:text-[4rem] text-center md:text-left whitespace-nowrap">
+						<h2
+							ref={subHeaderRef}
+							className="text-[3.5rem] sm:text-[4rem] text-center md:text-left whitespace-nowrap translate-y-5 opacity-0"
+						>
 							Art on the skin is the imprint of your soul
 						</h2>
 						<div className="md:flex justify-between items-center">
-							<p className="text-center md:text-left  mon-light">
-								Trust the professionals and create{" "}
-								<br className="hidden md:block" /> a unique tattoo that will{" "}
+							<p className="text-center md:text-left mon-light">
+								<span className="word">Trust&nbsp;</span>
+								<span className="word">the&nbsp;</span>
+								<span className="word">professionals&nbsp;</span>
+								<span className="word">and&nbsp;</span>
+								<span className="word">create&nbsp;</span>
+								<br className="hidden md:block" />
+								<span className="word">a&nbsp;</span>
+								<span className="word">unique&nbsp;</span>
+								<span className="word">tattoo&nbsp;</span>
+								<span className="word">that&nbsp;</span>
+								<span className="word">will&nbsp;</span>
 								<br className="hidden sm:block md:hidden" />
-								become <br className="hidden md:block" /> part of your story and
-								emphasize <br className="hidden md:block" />
-								your personality.
+								<span className="word">become&nbsp;</span>
+								<span className="word">part&nbsp;</span>
+								<span className="word">of&nbsp;</span>
+								<span className="word">your&nbsp;</span>
+								<span className="word">story&nbsp;</span>
+								<span className="word">and&nbsp;</span>
+								<span className="word">emphasize&nbsp;</span>
+								<span className="word">your&nbsp;</span>
+								{/* <br className="hidden md:block" /> */}
+								<span className="word">personality.&nbsp;</span>
 							</p>
 
-							<div className="hidden md:block">
+							<div
+								className="hidden md:block translate-x-[50px] opacity-0"
+								ref={wavyRef}
+							>
 								<Image
 									src={wavy}
 									alt="wavy Image"
@@ -38,7 +165,10 @@ export default function Herosection() {
 
 						<div className="mt-5 hidden md:block">
 							<div className="flex items-end justify-between">
-								<div className="rounded-2xl border border-black flex flex-col p-3">
+								<div
+									ref={cardRef}
+									className="rounded-2xl border border-black flex flex-col p-3 translate-x-[-50px] opacity-0"
+								>
 									<div className="flex items-center mb-3">
 										<Image
 											src="/hs4.webp"
@@ -86,7 +216,10 @@ export default function Herosection() {
 										look at the reviews of <br /> our customers
 									</p>
 								</div>
-								<div className="flex items-center">
+								<div
+									ref={buttonRef}
+									className="flex items-center translate-x-[-50px] opacity-0"
+								>
 									<button className="lg:px-12 md:px-8 py-3 bg-black rounded-2xl flex justify-center items-center text-white whitespace-nowrap">
 										Book Now
 									</button>
@@ -100,19 +233,25 @@ export default function Herosection() {
 						</div>
 					</div>
 					{/* hero image */}
-					<div className="relative h-full w-full basis-1/2">
+					<div
+						className="relative h-full w-full basis-1/2 opacity-0"
+						ref={heroImageRef}
+					>
 						<Image
 							src={heroImage}
 							alt="hero section Image"
 							width={500}
 							height={327}
 							// fill
-							className="rounded-2xl object-cover h-[327px] w-full"
+							className="rounded-2xl object-cover h-[327px] w-full "
 						/>
 					</div>
 				</div>
 
-				<div className="my-5 md:hidden px-2">
+				<div
+					className="my-5 md:hidden px-2 opacity-0 scale-110 translate-y-5"
+					ref={mobileCardRef}
+				>
 					<div className="flex items-end justify-between ">
 						<div className="rounded-2xl border border-black flex flex-col p-3 relative">
 							<div className="absolute top-0 right-[-40%]">
@@ -186,3 +325,21 @@ export default function Herosection() {
 		</section>
 	);
 }
+
+// Animate each word
+// anime.timeline({ loop: false }).add({
+// 	targets: ".word",
+// 	translateY: [-10, 0],
+//     color: ["#fff", "#000"],
+// 	opacity: [1],
+// 	easing: "easeOutExpo",
+// 	duration: 3600,
+// 	delay: (_, i) => 100 * i,
+// });
+
+// scrollTrigger: {
+//     trigger: ".container",
+//     pin: true, // pin the trigger element while active
+//     start: "top top", // when the top of the trigger hits the top of the viewport
+//     end: "+=500", // end after scrolling 500px beyond the start
+//     scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar

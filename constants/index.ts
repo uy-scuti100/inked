@@ -26,7 +26,7 @@ export const info: InfoProp[] = [
 	},
 	{
 		title: "10+",
-		label: "Years  experience",
+		label: "Years of experience",
 	},
 	{
 		title: "830+",

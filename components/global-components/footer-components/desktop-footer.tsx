@@ -2,8 +2,11 @@ import { ICONS, footerLinks } from "@/constants";
 import { MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect, useRef } from "react";
 import logo from "@/public/logo.png";
+import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
+import sr from "@/lib/sr";
+import { srConfig } from "@/lib/utils";
 
 export const DesktopFooter = ({
 	email,
@@ -18,11 +21,30 @@ export const DesktopFooter = ({
 		setEmail("");
 	};
 
+	const prefersReducedMotion = usePrefersReducedMotion();
+	const desktopFooterTitle = useRef<HTMLDivElement | null>(null);
+	const desktopFooterPragraph = useRef<HTMLDivElement | null>(null);
+	const desktopFooterProjects = useRef<(HTMLDivElement | null)[]>([]);
+	const desktopFooterSubTitle = useRef<HTMLDivElement | null>(null);
+	useEffect(() => {
+		if (prefersReducedMotion) {
+			return;
+		}
+		if (sr) {
+			sr.reveal(desktopFooterTitle.current!, srConfig());
+			sr.reveal(desktopFooterSubTitle.current!, srConfig());
+			sr.reveal(desktopFooterPragraph.current!, srConfig());
+			desktopFooterProjects.current.forEach(
+				(ref, i) => ref && sr?.reveal(ref, srConfig(i * 100))
+			);
+		}
+	}, []);
+
 	return (
 		<div className="rounded-2xl bg-black py-10 px-4">
 			<div>
 				<div className="flex justify-between items-center  border-b border-greyish/20 pb-10">
-					<div>
+					<div ref={desktopFooterTitle}>
 						<h2 className=" text-7xl uppercase text-white ">
 							Ready to work with us?
 						</h2>
@@ -31,7 +53,10 @@ export const DesktopFooter = ({
 							<span className="text-orange text-sm">20%</span>
 						</p>
 					</div>
-					<div className="text-5xl happy-monkey text-white">
+					<div
+						className="text-5xl happy-monkey text-white"
+						ref={desktopFooterSubTitle}
+					>
 						Your tattoo studio
 					</div>
 				</div>
@@ -39,7 +64,7 @@ export const DesktopFooter = ({
 
 			<div className="flex justify-between items-end mt-5">
 				<div className="flex flex-col gap-10">
-					<div className="flex flex-col gap-3">
+					<div className="flex flex-col gap-3" ref={desktopFooterPragraph}>
 						<div className="flex items-center gap-2">
 							<Image
 								src={logo}
@@ -83,7 +108,15 @@ export const DesktopFooter = ({
 						{footerLinks.map((f, i) => {
 							const { title, links } = f;
 							return (
-								<div key={i} className=" flex gap-4">
+								<div
+									key={i}
+									ref={(el) => {
+										if (el) {
+											desktopFooterProjects.current[i] = el;
+										}
+									}}
+									className=" flex gap-4"
+								>
 									<div>
 										<h3 className="capitalize font-bold mb-3 text-sm">
 											{title}

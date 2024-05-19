@@ -3,24 +3,33 @@
 import { ICONS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import logo from "@/public/logo.png";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 export default function Navbar() {
 	const [open, setOpen] = useState(false);
-	const [prevScrollPos, setPrevScrollPos] = useState(0);
-	const [visible, setVisible] = useState(true);
+	const [scrollDirection, setScrollDirection] = useState("up");
+	const [lastScrollY, setLastScrollY] = useState(0);
+	const navRef = useRef<HTMLDivElement | null>(null);
+
+	const handleScroll = () => {
+		if (window.scrollY > lastScrollY) {
+			setScrollDirection("down");
+		} else {
+			setScrollDirection("up");
+		}
+		setLastScrollY(window.scrollY);
+	};
 
 	useEffect(() => {
-		const handleScroll = () => {
-			const currentScrollPos = window.scrollY;
-			setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-			setPrevScrollPos(currentScrollPos);
-		};
-
 		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, [prevScrollPos]);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, [lastScrollY]);
 
 	useEffect(() => {
 		if (open) {
@@ -29,16 +38,25 @@ export default function Navbar() {
 			document.body.style.overflow = "auto";
 		}
 	}, [open]);
+
+	// useGSAP(() => {
+	// 	gsap.to(navRef.current, {
+	// 		y: 0,
+	// 		duration: 1,
+	// 		opacity: 1,
+	// 		ease: "power4.inOut",
+	// 	});
+	// }, []);
 	const toggleNav = () => {
 		setOpen((prev) => !prev);
 	};
-
 	return (
-		<>
+		<nav>
 			<div
+				// ref={navRef}
 				className={` ${
-					visible ? "fixed nav-visible" : "absolute nav-hidden"
-				}  flex sm:static top-3  justify-between left-0 right-0 w-[98%] z-[999999] sm:pt-3 items-center flex-col px-2 py-3 border border-greyish rounded-full bg-greyish sm:mt-3 mx-auto navbar`}
+					scrollDirection === "down" ? "-translate-y-[130%]" : "translate-y-0"
+				} fixed flex sm:static justify-between top-3 left-0 right-0 w-[98%] z-[999999] sm:pt-3 items-center flex-col px-2 py-3 border border-greyish rounded-full bg-greyish sm:mt-3 mx-auto duration-500 transition-transform ease-linear `}
 			>
 				<div className="justify-between items-center flex w-full">
 					<Link href={"/"}>
@@ -113,6 +131,6 @@ export default function Navbar() {
 					</div>
 				</nav>
 			</div>
-		</>
+		</nav>
 	);
 }

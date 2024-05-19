@@ -1,7 +1,10 @@
 import { ICONS, footerLinks } from "@/constants";
-import { LocateIcon, MapPin, Phone } from "lucide-react";
+import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
+import sr from "@/lib/sr";
+import { srConfig } from "@/lib/utils";
+import { MapPin, Phone } from "lucide-react";
 import Link from "next/link";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useRef } from "react";
 
 export const MobileFooter = ({
 	email,
@@ -16,13 +19,33 @@ export const MobileFooter = ({
 		setEmail("");
 	};
 
+	const prefersReducedMotion = usePrefersReducedMotion();
+	const footerTitle = useRef<HTMLDivElement | null>(null);
+	const footerProjects = useRef<(HTMLDivElement | null)[]>([]);
+	const footerSubTitle = useRef<HTMLDivElement | null>(null);
+	useEffect(() => {
+		if (prefersReducedMotion) {
+			return;
+		}
+		if (sr) {
+			sr.reveal(footerTitle.current!, srConfig());
+			sr.reveal(footerSubTitle.current!, srConfig());
+			footerProjects.current.forEach(
+				(ref, i) => ref && sr?.reveal(ref, srConfig(i * 100))
+			);
+		}
+	}, []);
+
 	return (
 		<div>
 			<div className="rounded-2xl bg-black py-10">
-				<h2 className="text-center text-7xl uppercase text-white ">
+				<h2
+					className="text-center text-7xl uppercase text-white "
+					ref={footerTitle}
+				>
 					Ready to work with us?
 				</h2>
-				<p className="text-sm text-white text-center">
+				<p className="text-sm text-white text-center" ref={footerSubTitle}>
 					The discount for the first tattoo is{" "}
 					<span className="text-orange text-sm">20%</span>
 				</p>
@@ -53,7 +76,14 @@ export const MobileFooter = ({
 					{footerLinks.map((f, i) => {
 						const { title, links } = f;
 						return (
-							<div key={i}>
+							<div
+								key={i}
+								ref={(el) => {
+									if (el) {
+										footerProjects.current[i] = el;
+									}
+								}}
+							>
 								<h3 className="capitalize text-xl font-bold mb-3">{title}</h3>
 								<div className={`flex flex-col gap-4`}>
 									{i === 0 ? (
