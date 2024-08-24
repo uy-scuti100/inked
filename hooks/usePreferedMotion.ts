@@ -1,12 +1,10 @@
 "use client";
+
 import { useState, useEffect } from "react";
 
-export function usePrefersReducedMotion() {
+function usePrefersReducedMotion() {
 	const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-		// Check for server-side rendering and default to true
 		if (typeof window === "undefined") return true;
-
-		// Efficiently check media query using window.matchMedia
 		const prefersMotion = window.matchMedia(
 			"(prefers-reduced-motion: no-preference)"
 		);
@@ -28,4 +26,4 @@ export function usePrefersReducedMotion() {
 	return prefersReducedMotion;
 }
 
-// https://www.joshwcomeau.com/snippets/react-hooks/use-prefers-reduced-motion/
+export default usePrefersReducedMotion;

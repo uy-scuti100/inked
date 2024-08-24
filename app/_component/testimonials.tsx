@@ -1,19 +1,14 @@
 "use client";
 import { ICONS, testimonial } from "@/constants";
-import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
 import sr from "@/lib/sr";
 import { srConfig } from "@/lib/utils";
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 
 export default function Testimonials() {
-	const prefersReducedMotion = usePrefersReducedMotion();
 	const testimonialTitle = useRef<HTMLDivElement | null>(null);
 	const testimonialProjects = useRef<(HTMLElement | null)[]>([]);
 	useEffect(() => {
-		if (prefersReducedMotion) {
-			return;
-		}
 		if (sr) {
 			sr.reveal(testimonialTitle.current!, srConfig());
 

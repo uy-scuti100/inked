@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/global-components/navbar";
 import Footer from "@/components/global-components/footer";
+import SmoothScroll from "@/provider/smooth-scroll";
 
 export const metadata: Metadata = {
 	title: "Inked",
@@ -17,9 +18,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className="antialiased mx-auto max-w-5xl min-h-screen">
-				<Navbar />
-				{children}
-				<Footer />
+				<SmoothScroll>
+					<Navbar />
+					{children}
+					<Footer />
+				</SmoothScroll>
 			</body>
 		</html>
 	);

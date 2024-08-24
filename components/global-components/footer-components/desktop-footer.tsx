@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { FormEvent, useEffect, useRef } from "react";
 import logo from "@/public/logo.png";
-import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
 import sr from "@/lib/sr";
 import { srConfig } from "@/lib/utils";
 
@@ -21,15 +20,11 @@ export const DesktopFooter = ({
 		setEmail("");
 	};
 
-	const prefersReducedMotion = usePrefersReducedMotion();
 	const desktopFooterTitle = useRef<HTMLDivElement | null>(null);
 	const desktopFooterPragraph = useRef<HTMLDivElement | null>(null);
 	const desktopFooterProjects = useRef<(HTMLDivElement | null)[]>([]);
 	const desktopFooterSubTitle = useRef<HTMLDivElement | null>(null);
 	useEffect(() => {
-		if (prefersReducedMotion) {
-			return;
-		}
 		if (sr) {
 			sr.reveal(desktopFooterTitle.current!, srConfig());
 			sr.reveal(desktopFooterSubTitle.current!, srConfig());

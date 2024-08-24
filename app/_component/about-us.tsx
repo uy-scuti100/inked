@@ -8,7 +8,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import sr from "@/lib/sr";
 import { srConfig } from "@/lib/utils";
-import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
 
 export default function AboutUs() {
 	const headerRef = useRef<HTMLDivElement | null>(null);
@@ -18,8 +17,6 @@ export default function AboutUs() {
 	const revealArchiveLink = useRef<HTMLDivElement | null>(null);
 	const tl = useRef<gsap.core.Timeline | null>(null);
 	gsap.registerPlugin(ScrollTrigger);
-
-	const prefersReducedMotion = usePrefersReducedMotion();
 
 	useGSAP(() => {
 		tl.current = gsap.timeline();
@@ -53,9 +50,6 @@ export default function AboutUs() {
 			});
 	}, []);
 	useEffect(() => {
-		if (prefersReducedMotion) {
-			return;
-		}
 		if (sr) {
 			sr.reveal(revealTitle.current!, srConfig());
 			sr.reveal(revealArchiveLink.current!, srConfig());

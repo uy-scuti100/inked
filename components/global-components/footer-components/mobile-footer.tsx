@@ -1,5 +1,4 @@
 import { ICONS, footerLinks } from "@/constants";
-import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
 import sr from "@/lib/sr";
 import { srConfig } from "@/lib/utils";
 import { MapPin, Phone } from "lucide-react";
@@ -19,14 +18,10 @@ export const MobileFooter = ({
 		setEmail("");
 	};
 
-	const prefersReducedMotion = usePrefersReducedMotion();
 	const footerTitle = useRef<HTMLDivElement | null>(null);
 	const footerProjects = useRef<(HTMLDivElement | null)[]>([]);
 	const footerSubTitle = useRef<HTMLDivElement | null>(null);
 	useEffect(() => {
-		if (prefersReducedMotion) {
-			return;
-		}
 		if (sr) {
 			sr.reveal(footerTitle.current!, srConfig());
 			sr.reveal(footerSubTitle.current!, srConfig());

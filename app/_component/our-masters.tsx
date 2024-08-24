@@ -1,20 +1,16 @@
 "use client";
 import { masters } from "@/constants";
-import { usePrefersReducedMotion } from "@/hooks/usePreferedMotion";
+
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import sr from "@/lib/sr";
 import { srConfig } from "@/lib/utils";
 
 export default function OurMasters() {
-	const prefersReducedMotion = usePrefersReducedMotion();
 	const masterTitle = useRef<HTMLDivElement | null>(null);
 	const masterProjects = useRef<(HTMLDivElement | null)[]>([]);
 	const masterSubTitle = useRef<HTMLDivElement | null>(null);
 	useEffect(() => {
-		if (prefersReducedMotion) {
-			return;
-		}
 		if (sr) {
 			sr.reveal(masterTitle.current!, srConfig());
 			sr.reveal(masterSubTitle.current!, srConfig());
